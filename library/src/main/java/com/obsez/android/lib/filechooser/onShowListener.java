@@ -3,6 +3,7 @@ package com.obsez.android.lib.filechooser;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
@@ -62,6 +63,7 @@ class onShowListener implements DialogInterface.OnShowListener {
         _c.get()._negativeBtn = _c.get()._alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
         _c.get()._positiveBtn = _c.get()._alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
 
+        _c.get()._alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
         ViewGroup buttonBar = (ViewGroup) _c.get()._positiveBtn.getParent();
         ViewGroup.LayoutParams btnParams = buttonBar.getLayoutParams();
         btnParams.width = MATCH_PARENT;

@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.TypedValue;
@@ -499,6 +500,7 @@ public class ChooserDialog implements AdapterView.OnItemClickListener, DialogInt
         _alertDialog.setCanceledOnTouchOutside(this._cancelOnTouchOutside);
         _alertDialog.setOnShowListener(new onShowListener(this));
 
+
         _list = _alertDialog.getListView();
         _list.setOnItemClickListener(this);
         if (_enableMultiple) {
@@ -742,9 +744,16 @@ public class ChooserDialog implements AdapterView.OnItemClickListener, DialogInt
         if (_alertDialog != null && !_disableTitle) {
             if (_followDir) {
                 if (displayPath) {
-                    _alertDialog.setTitle(_currentDir.getName());
+                    _alertDialog.setTitle(_currentDir.getPath().substring(_currentDir.getPath().lastIndexOf("/") + 1));
                 } else {
-                    if (_titleRes != -1) {
+                    if (_currentDir instanceof RootFile){
+                        if (_currentDir.getAbsolutePath().equals(primaryRoot)) {
+                            _alertDialog.setTitle(sPrimaryStorage.replace(".. ", ""));
+                        } else if (_currentDir.getAbsolutePath().equals(removableRoot)) {
+                            _alertDialog.setTitle(sSdcardStorage.replace(".. ", ""));
+                        }
+                    }
+                    else if (_titleRes != -1) {
                         _alertDialog.setTitle(_titleRes);
                     } else if (_title != null) {
                         _alertDialog.setTitle(_title);
