@@ -1,53 +1,57 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply plugin: 'com.android.library'
 
-buildscript {
-    ext.kotlin_version = '1.3.61'
-    repositories {
-        google()
-        jcenter()
-        mavenCentral()
-        //maven { url "https://jitpack.io" }
-        //maven { url "http://dl.bintray.com/hedzr/maven" }
-        //maven { url "https://maven.google.com" }
-        //maven { url "https://dl.bintray.com/kotlin/kotlinx/" }
-        mavenLocal()
+def VERSION_NAME = "1.2.1"
+def VERSION_CODE = 102001
+
+def ANDROID_COMPILE_SDK_VERSION = 30
+def ANDROID_TARGET_SDK_VERSION = 30
+//def ANDROID_BUILD_TOOLS_VERSION = project.ANDROID_BUILD_TOOLS_VERSION
+def ANDROID_MIN_SDK_VERSION = 14
+
+def JAVA_COMPATIBILITY =  JavaVersion.valueOf("VERSION_1_8")
+
+android {
+    compileSdkVersion ANDROID_COMPILE_SDK_VERSION
+    //buildToolsVersion ANDROID_BUILD_TOOLS_VERSION
+    resourcePrefix "obsez_fc__"
+
+    defaultConfig {
+        minSdkVersion ANDROID_MIN_SDK_VERSION
+        targetSdkVersion ANDROID_TARGET_SDK_VERSION
+        versionCode VERSION_CODE
+        versionName VERSION_NAME
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
-        classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.9.6'
-        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4"
-        //classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+//        debug {
+//            buildConfig "public final static boolean HAS_PROTOTYPE_FEATURE = true;"
+//        }
+//        release {
+//            buildConfig "public final static boolean HAS_PROTOTYPE_FEATURE = false;"
+//        }
     }
+
+    compileOptions {
+        sourceCompatibility JAVA_COMPATIBILITY
+        targetCompatibility JAVA_COMPATIBILITY
+    }
+    lintOptions {
+        lintConfig rootProject.file('lint.xml')
+        quiet true
+        abortOnError false
+        ignoreWarnings true
+        disable 'InvalidPackage'  // Some libraries have issues with this.
+        disable 'OldTargetApi'    // Lint gives this warning but SDK 20 would be Android L Beta.
+        disable 'IconDensities'   // For testing purpose. This is safe to remove.
+        disable 'deprecation'
+        checkReleaseBuilds false
+    }
+
 }
 
-//plugins {
-//    id "com.jfrog.bintray" version "1.2"
-//}
-//apply plugin: 'com.jfrog.artifactory'
-//apply plugin: 'com.jfrog.bintray'
-// only our subprojects have a bintray configuration. replace the root project's
-// `bintrayUpload` task with one that restricts the calls to the subprojects.
-//project.afterEvaluate {
-//    task bintrayUpload(group: "publishing", overwrite: true) {
-//        dependsOn subprojects.bintrayUpload
-//    }
-//}
-
-allprojects {
-    repositories {
-        google()
-        jcenter()
-        maven { url "https://jitpack.io" }
-        mavenCentral()
-        mavenLocal()
-    }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.1.0'
 }
