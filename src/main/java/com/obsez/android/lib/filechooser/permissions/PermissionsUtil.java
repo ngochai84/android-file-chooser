@@ -24,6 +24,9 @@ public final class PermissionsUtil {
 
     public static void checkPermissions(@NonNull Context context,
         @Nullable final OnPermissionListener onPermissionListener, final String... permissions) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            return;
+        }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || permissions.length == 0) {
             if (onPermissionListener != null) onPermissionListener.onPermissionGranted(permissions);
             return;

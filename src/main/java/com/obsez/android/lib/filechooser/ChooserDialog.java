@@ -534,7 +534,7 @@ public class ChooserDialog implements AdapterView.OnItemClickListener, DialogInt
             build();
         }
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||  Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q ) {
             showDialog();
             return this;
         }

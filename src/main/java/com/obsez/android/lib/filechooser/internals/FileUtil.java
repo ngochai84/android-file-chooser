@@ -180,6 +180,8 @@ public class FileUtil {
     public static String getStoragePath(Context context, boolean isRemovable) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             return getStoragePathLow(context, isRemovable);
+        }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            return Environment.getExternalStorageDirectory().getAbsolutePath();
         } else {
             return getStoragePath24(context, isRemovable);
         }
@@ -188,6 +190,7 @@ public class FileUtil {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @NonNull
     public static String getStoragePath24(Context context, boolean isRemovable) {
+
         StorageManager storageManager = (StorageManager) context.getSystemService(Context.STORAGE_SERVICE);
         Class<?> storageVolumeClazz = null;
         try {
