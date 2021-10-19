@@ -47,6 +47,20 @@ public class FileUtil {
         }
     }
 
+    public static String getExtensionFromFileName(String fileName) {
+        if (fileName == null || fileName.isEmpty()) {
+            return null;
+        }
+
+        int dot = fileName.lastIndexOf(".");
+        if (dot >= 0) {
+            return fileName.substring(dot);
+        } else {
+            // No extension.
+            return "";
+        }
+    }
+
     public static String getExtensionWithoutDot(File file) {
         String ext = getExtension(file);
         if (ext.length() == 0) {
