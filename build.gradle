@@ -8,9 +8,10 @@ def ANDROID_TARGET_SDK_VERSION = 34
 //def ANDROID_BUILD_TOOLS_VERSION = project.ANDROID_BUILD_TOOLS_VERSION
 def ANDROID_MIN_SDK_VERSION = 24
 
-def JAVA_COMPATIBILITY =  JavaVersion.valueOf("VERSION_1_8")
+def JAVA_COMPATIBILITY =  JavaVersion.VERSION_17
 
 android {
+    namespace 'com.ngochai84.filechooser'
     compileSdkVersion ANDROID_COMPILE_SDK_VERSION
     //buildToolsVersion ANDROID_BUILD_TOOLS_VERSION
     resourcePrefix "obsez_fc__"
@@ -35,16 +36,13 @@ android {
         sourceCompatibility JAVA_COMPATIBILITY
         targetCompatibility JAVA_COMPATIBILITY
     }
-    lintOptions {
-        lintConfig rootProject.file('lint.xml')
-        quiet true
+    lint {
         abortOnError false
-        ignoreWarnings true
-        disable 'InvalidPackage'  // Some libraries have issues with this.
-        disable 'OldTargetApi'    // Lint gives this warning but SDK 20 would be Android L Beta.
-        disable 'IconDensities'   // For testing purpose. This is safe to remove.
-        disable 'deprecation'
         checkReleaseBuilds false
+        disable 'InvalidPackage', 'OldTargetApi', 'IconDensities', 'deprecation'
+        ignoreWarnings true
+        lintConfig file('lint.xml')
+        quiet true
     }
 
 }
