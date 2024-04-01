@@ -11,12 +11,12 @@ def ANDROID_MIN_SDK_VERSION = 24
 def JAVA_COMPATIBILITY =  JavaVersion.VERSION_17
 
 android {
-    namespace 'com.ngochai84.filechooser'
-    compileSdkVersion ANDROID_COMPILE_SDK_VERSION
+    namespace 'com.obsez.android.lib.filechooser'
     //buildToolsVersion ANDROID_BUILD_TOOLS_VERSION
     resourcePrefix "obsez_fc__"
 
     defaultConfig {
+        compileSdk ANDROID_COMPILE_SDK_VERSION
         minSdkVersion ANDROID_MIN_SDK_VERSION
         targetSdkVersion ANDROID_TARGET_SDK_VERSION
     }
